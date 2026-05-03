@@ -1,36 +1,49 @@
-# loopz — Never lose loop progress again.
+<div align="center">
 
-> Add one decorator. Any Python loop auto-resumes from exactly where it crashed.
+<img src="demo.gif" width="100%" alt="loopz demo"/>
 
-<p align="center">
-  <img src="demo.png" width="900"/>
-</p>
+<br/>
 
-[![PyPI version](https://badge.fury.io/py/loopz.svg)](https://badge.fury.io/py/loopz)
+# loopz
+
+### Your Python loops never die again.
+
+<br/>
+
+[![PyPI version](https://badge.fury.io/py/loopz.svg)](https://pypi.org/project/loopz/)
 [![Python](https://img.shields.io/pypi/pyversions/loopz)](https://pypi.org/project/loopz)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/loopz)](https://pypi.org/project/loopz/)
+[![GitHub Stars](https://img.shields.io/github/stars/Shiv0087/loopz?style=social)](https://github.com/Shiv0087/loopz)
 
----
-
-## The Problem
-
-You are processing 100,000 images. Your Colab session drops at 60,000.  
-You are training a model for 50 epochs. Your laptop dies at epoch 30.  
-You start over. Every single time.
-
-**loopz fixes this.**
-
----
-
-## Install
+<br/>
 
 ```bash
 pip install loopz
 ```
 
+</div>
+
 ---
 
-## Quick Start
+## The Problem
+
+You've been there.
+
+```
+Training ResNet50... epoch 31/50 (62% done)
+4 hours in. Loss looking great.
+
+💥 Colab session disconnected.
+```
+
+You restart. From **epoch 1**. Again.
+
+**loopz fixes this with one line.**
+
+---
+
+## Quickstart
 
 ```python
 import loopz
@@ -39,18 +52,19 @@ import loopz
 def process(image_path):
     extract_and_save_features(image_path)
 
-process(all_image_paths)   # 💥 crash at 60k?  run again → resumes at 60k ✅
+process(all_image_paths)
+# 💥 crash at 60,000?  run again → resumes at 60,000 ✅
 ```
 
-That is the entire API for the common case.  
-One decorator. One argument. Done.
+That's it. One decorator. One argument. Done.
 
 ---
 
-## ML Training — Full State Save
+## ML Training — Full State Restore
 
-loopz saves and restores your model weights, optimizer state, LR scheduler,
-GradScaler, and any accumulators living inside the loop — all automatically.
+loopz saves and restores **everything** — model weights, optimizer, scheduler,
+GradScaler, accumulators, and even the random seed state — so your training
+continues as if the crash never happened.
 
 ```python
 import loopz
@@ -60,17 +74,15 @@ model     = MyModel()
 optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=50)
 
-running_loss = [0.0]   # wrap in a list so loopz can restore it in-place
+running_loss = [0.0]
 best_acc     = [0.0]
 
 @loopz.track(
     "training",
-    save_every  = 1,                                          # save every epoch
-    state       = {"model": model, "optimizer": optimizer,
-                   "scheduler": scheduler},
-    loop_vars   = {"running_loss": running_loss,
-                   "best_acc":     best_acc},
-    notify      = print,                                      # or send a Telegram/webhook
+    save_every = 1,
+    state      = {"model": model, "optimizer": optimizer, "scheduler": scheduler},
+    loop_vars  = {"running_loss": running_loss, "best_acc": best_acc},
+    notify     = print,
 )
 def train(epoch):
     loss, acc = train_one_epoch(model, train_loader, optimizer, scheduler)
@@ -79,10 +91,14 @@ def train(epoch):
     print(f"Epoch {epoch} | loss={loss:.4f} | acc={acc:.4f}")
 
 train(range(50))
-# 💥 crashes at epoch 12?  run the script again →
-# 🔁 loopz: Resuming 'training' from 12/50 (24.0% done)
-#    State     : ['model', 'optimizer', 'scheduler'] ✅
-#    Loop vars : ['running_loss', 'best_acc'] ✅
+```
+
+```
+# 💥 crashes at epoch 31?  just run the script again →
+
+🔁  loopz: Resuming 'training' from 31/50 (62.0% done)
+    model ✅  optimizer ✅  scheduler ✅  rng state ✅
+    loop_vars: running_loss ✅  best_acc ✅
 ```
 
 ---
@@ -90,7 +106,7 @@ train(range(50))
 ## What Gets Saved
 
 | Object | Supported |
-|---|---|
+|--------|-----------|
 | `torch.nn.Module` | ✅ |
 | `torch.nn.DataParallel` | ✅ |
 | `torch.nn.parallel.DistributedDataParallel` | ✅ |
@@ -99,10 +115,27 @@ train(range(50))
 | `torch.cuda.amp.GradScaler` | ✅ |
 | `torch.Tensor` | ✅ |
 | `numpy.ndarray` | ✅ |
-| sklearn estimator | ✅ |
+| `sklearn` estimator | ✅ |
 | Plain Python object (any picklable) | ✅ |
-| Python / Numpy / PyTorch / CUDA random state | ✅ |
+| Python / NumPy / PyTorch / CUDA random state | ✅ |
 | Variables inside the loop (`running_loss`, `best_acc`, …) | ✅ |
+
+---
+
+## How It Works
+
+```
+Every save_every-th iteration, loopz atomically writes:
+
+  ~/.loopz/
+  ├── loopz_<hash>.json    ← loop position + metadata
+  ├── loopz_<hash>.state   ← ML object weights + RNG state
+  └── loopz_<hash>.vars    ← your loop accumulators
+
+On crash     → saves final checkpoint, re-raises exception (stack trace visible)
+On next run  → detects checkpoint, restores everything, resumes from exact index
+On complete  → deletes all saved files automatically (clean slate)
+```
 
 ---
 
@@ -112,11 +145,11 @@ train(range(50))
 
 ```python
 @loopz.track(
-    job_name   = "my_job",    # unique name — used for resume lookup
-    save_every = 10,          # checkpoint every N iterations
-    state      = {...},       # ML objects to save (optional)
-    loop_vars  = {...},       # accumulators inside the loop (optional)
-    notify     = callable,    # called on completion or crash (optional)
+    job_name   = "my_job",   # unique name — used to find checkpoint on resume
+    save_every = 10,         # save checkpoint every N iterations
+    state      = {...},      # ML objects to checkpoint (optional)
+    loop_vars  = {...},      # accumulators inside the loop (optional)
+    notify     = callable,   # called on completion or crash (optional)
 )
 def process(item):
     ...
@@ -124,54 +157,77 @@ def process(item):
 process(my_list)
 ```
 
+---
+
 ### `loopz.status()`
 
-Print a summary of all incomplete (saved) jobs.
+See all incomplete jobs at a glance.
 
 ```
 📋 loopz — 1 saved job(s):
 
   🔁 training
-     Progress : 12/50 (24.0%)
+     Progress : 31/50 (62.0%)
      Saved at : 2026-03-22 14:30:00
-     Crashed  : training crash at epoch 12
+     Crashed  : session disconnected at epoch 31
 ```
+
+---
 
 ### `loopz.reset("job_name")`
 
-Delete all saved data for a job — it will start fresh next run.
+Delete saved data for a job — starts fresh next run.
 
 ### `loopz.reset_all()`
 
-Delete all saved data for every job.
+Delete saved data for every job.
 
 ---
 
-## How It Works
+## Use Cases
 
-1. On every `save_every`-th iteration loopz atomically writes:
-   - your loop position (JSON)
-   - your ML object weights (`.state`)
-   - your loop variables (`.vars`)
-   - the full random seed state (Python + Numpy + PyTorch + CUDA)
-
-2. On crash or KeyboardInterrupt, it saves one final checkpoint then re-raises the original exception so your stack trace is still visible.
-
-3. On the next run, loopz detects the saved position, restores all state, and resumes the loop from exactly that index.
-
-4. On clean completion, all saved files are deleted automatically.
+| Use Case | How loopz Helps |
+|----------|----------------|
+| 🤖 ML Training | Saves model, optimizer, scheduler, RNG — resumes deterministically |
+| 🖼️ Dataset Processing | Checkpoints every N images — never reprocess what's done |
+| 🌐 Web Scraping | Saves progress through URL lists — crash-safe scraping |
+| 📥 Bulk Downloads | Resumes from last successful download automatically |
+| 🧪 Experiments | Checkpoint any long-running experiment loop |
 
 ---
 
-## Limitations (be honest)
+## Limitations
 
-- **Primitives as loop_vars** — `int`, `float`, `str` cannot be mutated in-place in Python. Wrap them in a list: `loss = [0.0]` not `loss = 0.0`.
-- **Distributed training (multi-node)** — DDP on a single machine is supported; multi-node DDP across separate machines is not.
-- **Custom C++ extensions** — if your model uses custom CUDA ops with non-standard state, manual checkpointing is needed alongside loopz.
-- **Non-picklable objects** — if an object in `state=` cannot be pickled, loopz will print a warning and skip it.
+> Honest about what loopz can't do yet.
+
+- **Primitive loop vars** — `int`, `float`, `str` can't be mutated in-place. Wrap in a list: `loss = [0.0]` not `loss = 0.0`
+- **Multi-node DDP** — single-machine DDP is supported; multi-node across separate machines is not
+- **Custom CUDA C++ ops** — models with non-standard CUDA state may need manual checkpointing alongside loopz
+- **Non-picklable objects** — skipped with a warning if they can't be pickled
 
 ---
 
-## License
+## Contributing
 
-MIT © Shivrajsinh Jadeja
+loopz is MIT licensed and open to contributions of all sizes — from typo fixes to new features.
+
+1. Fork the repo
+2. Create your branch: `git checkout -b feature/my-feature`
+3. Make your change and add tests
+4. Open a Pull Request
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+
+---
+
+<div align="center">
+
+Built with 💀 after one too many Colab crashes.
+
+**[PyPI](https://pypi.org/project/loopz/) · [Issues](https://github.com/Shiv0087/loopz/issues) · [Discussions](https://github.com/Shiv0087/loopz/discussions)**
+
+<br/>
+
+*If loopz saved you even once — a ⭐ means everything to a solo builder.*
+
+</div>
