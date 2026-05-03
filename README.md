@@ -1,14 +1,14 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0a0a0a,100:e63946&height=220&section=header&text=loopz&fontSize=90&fontColor=ffffff&fontAlignY=42&desc=Your%20Python%20loops%20never%20die%20again.&descAlignY=62&descSize=18" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:03045e,50:0077b6,100:00b4d8&height=220&section=header&text=loopz&fontSize=90&fontColor=ffffff&fontAlignY=42&desc=Your%20Python%20loops%20never%20die%20again.&descAlignY=62&descSize=18" width="100%"/>
 
 <br/>
 
-[![PyPI](https://img.shields.io/badge/PyPI-loopz-e63946?style=for-the-badge&logo=pypi&logoColor=white)](https://pypi.org/project/loopz/)
-[![Python](https://img.shields.io/badge/Python-3.8+-white?style=for-the-badge&logo=python&logoColor=white&labelColor=0a0a0a)](https://pypi.org/project/loopz/)
-[![License](https://img.shields.io/badge/License-MIT-febc2e?style=for-the-badge)](LICENSE)
-[![Stars](https://img.shields.io/github/stars/Shiv0087/loopz?style=for-the-badge&color=e63946&logo=github)](https://github.com/Shiv0087/loopz/stargazers)
-[![Downloads](https://img.shields.io/pypi/dm/loopz?style=for-the-badge&color=4ade80&label=installs)](https://pypi.org/project/loopz/)
+[![PyPI](https://img.shields.io/badge/PyPI-loopz-00b4d8?style=for-the-badge&logo=pypi&logoColor=white)](https://pypi.org/project/loopz/)
+[![Python](https://img.shields.io/badge/Python-3.8+-white?style=for-the-badge&logo=python&logoColor=white&labelColor=03045e)](https://pypi.org/project/loopz/)
+[![License](https://img.shields.io/badge/License-MIT-06d6a0?style=for-the-badge)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/Shiv0087/loopz?style=for-the-badge&color=00b4d8&logo=github)](https://github.com/Shiv0087/loopz/stargazers)
+[![Downloads](https://img.shields.io/pypi/dm/loopz?style=for-the-badge&color=06d6a0&label=installs)](https://pypi.org/project/loopz/)
 
 <br/>
 
@@ -255,7 +255,7 @@ This is not just a project. It is a frustration turned into a tool. Every ML stu
 
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:e63946,100:0a0a0a&height=120&section=footer" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:00b4d8,50:0077b6,100:03045e&height=120&section=footer" width="100%"/>
 
 **[⭐ Star this repo](../../stargazers) &nbsp;·&nbsp; [📦 PyPI](https://pypi.org/project/loopz/) &nbsp;·&nbsp; [🐛 Issues](../../issues)**
 
