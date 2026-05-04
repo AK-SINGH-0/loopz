@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0a0a0a,100:e63946&height=180&section=header&text=Contributing%20to%20loopz&fontSize=42&fontColor=ffffff&fontAlignY=42&desc=Every%20great%20library%20is%20built%20by%20a%20community.%20Start%20here.&descAlignY=62&descSize=15" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:03045e,50:0077b6,100:00b4d8&height=220&section=header&text=loopz&fontSize=90&fontColor=ffffff&fontAlignY=42&desc=Your%20Python%20loops%20never%20die%20again.&descAlignY=62&descSize=18" width="100%"/>
 
 </div>
 
