@@ -1,87 +1,183 @@
-# Contributing to Loopz
+<div align="center">
 
-Thanks for your interest in contributing to **Loopz**! Contributions of all kinds are welcome: bug reports, feature requests, documentation improvements, and code changes.
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0a0a0a,100:e63946&height=180&section=header&text=Contributing%20to%20loopz&fontSize=42&fontColor=ffffff&fontAlignY=42&desc=Every%20great%20library%20is%20built%20by%20a%20community.%20Start%20here.&descAlignY=62&descSize=15" width="100%"/>
 
-## Table of Contents
-- [Code of Conduct](#code-of-conduct)
-- [How to Contribute](#how-to-contribute)
-- [Reporting Bugs](#reporting-bugs)
-- [Requesting Features](#requesting-features)
-- [Development Setup](#development-setup)
-- [Making a Pull Request](#making-a-pull-request)
-- [Commit Messages](#commit-messages)
-- [Style & Quality](#style--quality)
-- [License](#license)
+</div>
 
-## Code of Conduct
-Be respectful and constructive. Harassment or abusive behavior is not tolerated.
+<br/>
 
-## How to Contribute
-1. Check existing **Issues** and **Pull Requests** first.
-2. If you’re unsure, open an issue to discuss your idea before starting big work.
-3. Fork the repo and work in a feature branch.
+First of all — thank you. loopz is a solo-built, open source tool that exists because developers were tired of losing progress. If you are here, you probably felt that pain too. That already makes you the right person to contribute.
 
-## Reporting Bugs
-When opening a bug report, please include:
-- What you expected to happen
-- What actually happened
-- Steps to reproduce (as detailed as possible)
-- Screenshots/logs (if applicable)
-- Your environment (OS, browser/runtime version, etc.)
+Every contribution matters. A typo fix. A better error message. A new feature. All of it moves the project forward.
 
-## Requesting Features
-For feature requests, include:
-- The problem you’re trying to solve
-- Proposed solution (what you’d like to happen)
-- Alternatives you considered (optional)
-- Any mockups or examples (optional)
+---
 
-## Development Setup
-> Replace the install/run commands below with the ones that match your project.
+## 📋 Table of Contents
 
-Typical flow:
-1. Fork the repository.
-2. Clone your fork:
-   ```bash
-   git clone https://github.com/<your-username>/loopz.git
-   cd loopz
-   ```
-3. Create a branch:
-   ```bash
-   git checkout -b feature/my-change
-   ```
-4. Install dependencies (example for Node.js):
-   ```bash
-   npm install
-   ```
-5. Run the project (example):
-   ```bash
-   npm run dev
-   ```
+- [Code of Conduct](#-code-of-conduct)
+- [Ways to Contribute](#-ways-to-contribute)
+- [Reporting Bugs](#-reporting-bugs)
+- [Requesting Features](#-requesting-features)
+- [Development Setup](#-development-setup)
+- [Making a Pull Request](#-making-a-pull-request)
+- [Commit Messages](#-commit-messages)
+- [Good First Issues](#-good-first-issues)
+- [License](#-license)
 
-## Making a Pull Request
-1. Make sure your change is focused (one feature/fix per PR).
-2. Run tests/linting if available.
-3. Push your branch:
-   ```bash
-   git push origin feature/my-change
-   ```
-4. Open a Pull Request to `Shiv0087/loopz`.
-5. In the PR description, include:
-   - What changed and why
-   - Issue link (if any), e.g. `Closes #123`
-   - Screenshots for UI changes (if applicable)
+---
 
-## Commit Messages
-Use clear commit messages. Examples:
-- `fix: handle empty input in parser`
-- `docs: update setup instructions`
-- `feat: add export feature`
+## 🤝 Code of Conduct
 
-## Style & Quality
-- Keep code readable and consistent with the existing style.
-- Update documentation when behavior changes.
-- Add tests if your change affects logic (when applicable).
+Be kind. Be constructive. Be patient.
 
-## License
-By contributing, you agree that your contributions will be licensed under the same license as this repository.
+loopz is built for developers of all backgrounds and experience levels. Harassment, gatekeeping, or dismissive behavior will not be tolerated. If you see it, report it by opening an issue or emailing the maintainer directly.
+
+---
+
+## 💡 Ways to Contribute
+
+You do not need to write code to contribute. Here is what actually helps:
+
+| Type | Examples |
+|------|---------|
+| 🐛 Bug reports | Something crashes, behaves unexpectedly, or gives a wrong result |
+| 📖 Docs | Improve the README, fix typos, add examples, clarify confusing sections |
+| ✨ Features | New checkpoint targets, better CLI output, new notify integrations |
+| 🧪 Tests | Add test cases, improve coverage, catch edge cases |
+| 🎨 DX improvements | Better error messages, warnings, progress output |
+| ⭐ Spreading the word | Star the repo, share it, write about it |
+
+---
+
+## 🐛 Reporting Bugs
+
+Found something broken? Please open an [Issue](../../issues) and include:
+
+```
+**What happened:**
+loopz crashed when I passed a generator instead of a list.
+
+**What I expected:**
+It should either work or give a clear error message.
+
+**Steps to reproduce:**
+1. import loopz
+2. @loopz.track("job", save_every=10)
+3. pass a generator object
+4. see the error
+
+**Environment:**
+- Python version: 3.10
+- loopz version: pip show loopz
+- OS: Ubuntu 22.04 / Colab / Windows 11
+- PyTorch version (if relevant): 2.1.0
+```
+
+The more detail you give, the faster it gets fixed.
+
+---
+
+## ✨ Requesting Features
+
+Have an idea? Open an [Issue](../../issues) with the label `feature request` and include:
+
+- **The problem** — what are you trying to do that loopz currently can't?
+- **Your proposed solution** — how would you want it to work?
+- **Alternatives you considered** — why those don't work for you
+
+> 💡 Tip: Check [existing issues](../../issues) first — your idea might already be tracked.
+
+---
+
+## 🛠️ Development Setup
+
+```bash
+# 1. Fork the repo on GitHub, then clone your fork
+git clone https://github.com/<your-username>/loopz.git
+cd loopz
+
+# 2. Create a virtual environment
+python -m venv venv
+source venv/bin/activate      # Windows: venv\Scripts\activate
+
+# 3. Install loopz in editable mode with dev dependencies
+pip install -e ".[dev]"
+
+# 4. Create your branch
+git checkout -b feature/your-idea
+```
+
+> If `pip install -e ".[dev]"` fails, try `pip install -e .` — dev extras may not be set up yet.
+
+---
+
+## 🔁 Making a Pull Request
+
+```
+1. Make sure your change does one thing (one PR = one fix or feature)
+2. Test your change manually — run a loop, crash it, resume it
+3. Add or update tests if your change affects core logic
+4. Push your branch
+```
+
+```bash
+git add .
+git commit -m "feat: add telegram notify integration"
+git push origin feature/your-idea
+```
+
+Then open a Pull Request to `Shiv0087/loopz` and include:
+
+- **What changed** and why
+- **Issue link** if applicable — e.g. `Closes #12`
+- **How to test it** — what should the reviewer run to verify it works
+
+---
+
+## 📝 Commit Messages
+
+Follow this simple format:
+
+```
+type: short description
+
+Examples:
+fix: handle non-picklable objects gracefully
+feat: add support for multi-GPU DDP single node
+docs: add example for sklearn checkpointing
+test: add edge case for empty list input
+refactor: simplify checkpoint path hashing
+```
+
+Types: `fix` `feat` `docs` `test` `refactor` `chore`
+
+---
+
+## 🌱 Good First Issues
+
+Never contributed to open source before? Start here:
+
+- Look for issues tagged [`good first issue`](../../issues?q=is%3Aissue+label%3A%22good+first+issue%22)
+- Improve an error message to be more helpful
+- Add a missing example to the README
+- Write a test for an edge case
+
+You do not need to be an expert. You just need to care.
+
+---
+
+## 📄 License
+
+By contributing, you agree that your contributions will be licensed under the **MIT License** — the same license as loopz.
+
+---
+
+<div align="center">
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:e63946,100:0a0a0a&height=120&section=footer" width="100%"/>
+
+*Built with 💀 after one too many Colab crashes.*
+
+**[⭐ Star loopz](../../stargazers) &nbsp;·&nbsp; [🐛 Open an Issue](../../issues) &nbsp;·&nbsp; [📦 PyPI](https://pypi.org/project/loopz/)**
+
+</div>
