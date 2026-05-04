@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:03045e,50:0077b6,100:00b4d8&height=220&section=header&text=loopz&fontSize=90&fontColor=ffffff&fontAlignY=42&desc=Your%20Python%20loops%20never%20die%20again.&descAlignY=62&descSize=18" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1b2a,100:00c9c8&height=180&section=header&text=Contributing%20to%20loopz&fontSize=42&fontColor=ffffff&fontAlignY=42&desc=Every%20great%20library%20is%20built%20by%20a%20community.%20Start%20here.&descAlignY=62&descSize=15" width="100%"/>
 
 </div>
 
@@ -100,29 +100,20 @@ cd loopz
 python -m venv venv
 source venv/bin/activate      # Windows: venv\Scripts\activate
 
-# 3. Install loopz in editable mode with dev dependencies
-pip install -e ".[dev]"
+# 3. Install loopz in editable mode
+pip install -e .
 
 # 4. Create your branch
 git checkout -b feature/your-idea
 ```
 
-> If `pip install -e ".[dev]"` fails, try `pip install -e .` — dev extras may not be set up yet.
-
 ---
 
 ## 🔁 Making a Pull Request
 
-```
-1. Make sure your change does one thing (one PR = one fix or feature)
-2. Test your change manually — run a loop, crash it, resume it
-3. Add or update tests if your change affects core logic
-4. Push your branch
-```
-
 ```bash
 git add .
-git commit -m "feat: add telegram notify integration"
+git commit -m "feat: your change here"
 git push origin feature/your-idea
 ```
 
@@ -136,14 +127,9 @@ Then open a Pull Request to `Shiv0087/loopz` and include:
 
 ## 📝 Commit Messages
 
-Follow this simple format:
-
 ```
-type: short description
-
-Examples:
 fix: handle non-picklable objects gracefully
-feat: add support for multi-GPU DDP single node
+feat: add support for telegram notify hook
 docs: add example for sklearn checkpointing
 test: add edge case for empty list input
 refactor: simplify checkpoint path hashing
@@ -174,7 +160,7 @@ By contributing, you agree that your contributions will be licensed under the **
 
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:e63946,100:0a0a0a&height=120&section=footer" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:00c9c8,100:0d1b2a&height=120&section=footer" width="100%"/>
 
 *Built with 💀 after one too many Colab crashes.*
 
