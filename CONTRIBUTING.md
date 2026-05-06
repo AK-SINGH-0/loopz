@@ -162,7 +162,7 @@ By contributing, you agree that your contributions will be licensed under the **
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:00c9c8,100:0d1b2a&height=120&section=footer" width="100%"/>
 
-*Built with 💀 after one too many Colab crashes.*
+
 
 **[⭐ Star loopz](../../stargazers) &nbsp;·&nbsp; [🐛 Open an Issue](../../issues) &nbsp;·&nbsp; [📦 PyPI](https://pypi.org/project/loopz/)**
 
