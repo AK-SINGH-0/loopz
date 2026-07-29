@@ -174,4 +174,4 @@ Delete all saved data for every job.
 
 ## License
 
-MIT © Shivrajsinh Jadeja
+MIT © Shivrajsinh Jadeja and Ankush Kumar
