@@ -55,6 +55,7 @@ from .tracker import (
 
 __version__ = "1.0.0"
 __author__  = "Shivrajsinh Jadeja"
+__Co-author__ = "Ankush Kumar"
 __email__   = "jadejas.k@gmail.com"
 __license__ = "MIT"
 __url__     = "https://github.com/Shiv0087/loopz"
