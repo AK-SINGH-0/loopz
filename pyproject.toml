@@ -9,6 +9,7 @@ description     = "Never lose loop progress again — auto-saves and resumes any
 readme = { file = "README.md", content-type = "text/markdown" }
 license         = { file = "LICENSE" }
 authors = [{ name = "Shivrajsinh Jadeja", email = "jadejas.k7777@email.com" }]
+co-authors = [{ name = "Ankush Kumar"}]
 requires-python = ">=3.8"
 keywords        = [
     "checkpoint", "resume", "loop", "crash", "recovery",
